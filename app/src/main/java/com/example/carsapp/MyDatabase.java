@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.strictmode.SqliteObjectLeakedViolation;
 
 public class MyDatabase extends SQLiteOpenHelper {
     public static final String DB_NAME = "car_db";
@@ -61,8 +62,16 @@ public class MyDatabase extends SQLiteOpenHelper {
         return result > 0;
     }
 
-    public long getCarsCount (){
+    public long getCarsCount() {
         SQLiteDatabase database = getReadableDatabase();
-        return DatabaseUtils.queryNumEntries(database,CAR_TB_NAME);
+        return DatabaseUtils.queryNumEntries(database, CAR_TB_NAME);
     }
+
+    public boolean deletCar(Car car) {
+        SQLiteDatabase database = getWritableDatabase();
+        String arg[] = {String.valueOf(car.getId())};
+        int result = database.delete(CAR_TB_NAME, "id=?", arg);
+        return result > 0;
+    }
+
 }
