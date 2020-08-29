@@ -1,6 +1,8 @@
 package com.example.carsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,50 +10,41 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText textmodel, textcolor, textdistance;
     Button buttonsave, buttonrestor;
     MyDatabase database;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        database = new MyDatabase(this);
+        recyclerView = findViewById(R.id.rv_main);
 
-        textmodel = findViewById(R.id.model);
-        textcolor = findViewById(R.id.color);
-        textdistance = findViewById(R.id.dpr);
-        buttonsave = findViewById(R.id.btn_save);
-        buttonrestor = findViewById(R.id.btn_restor);
 
-        buttonsave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String model = textmodel.getText().toString();
-                String color = textcolor.getText().toString();
-                double distance = Double.parseDouble(textdistance.getText().toString());
+//        database = new MyDatabase(this);
 
-                Car car = new Car(model,color,distance);
-                boolean save = database.insertCar(car);
-                if (save)
-                    Toast.makeText(MainActivity.this, "SUCCES", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(MainActivity.this, "FAILD", Toast.LENGTH_SHORT).show();
+        DatabaseAccess databaseAccess =  DatabaseAccess.getInstance(this);
+        ArrayList<Car> cars = new ArrayList<>();
+        databaseAccess.open();
+        cars = databaseAccess.getAllCars();
+        databaseAccess.close();
 
-            }
-        });
 
-        buttonrestor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                long restor = database.getCarsCount();
-                Toast.makeText(MainActivity.this,"# "+ restor, Toast.LENGTH_SHORT).show();
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(cars);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,2);
 
-            }
-        });
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+
+
     }
 
 
