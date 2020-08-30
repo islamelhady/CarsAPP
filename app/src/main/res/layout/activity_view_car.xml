@@ -59,6 +59,7 @@
                     android:id="@+id/et_details_dpl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_fuel"
                     android:drawablePadding="16dp"

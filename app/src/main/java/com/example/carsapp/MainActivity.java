@@ -1,14 +1,19 @@
 package com.example.carsapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int ADD_CAR_REQ_CODE = 1;
     private static final int EDIT_CAR_REQ_CODE = 1;
     public static final String CAR_KEY = "car_key";
+    private static final int PERMESSINON_REQ_CODE = 4;
     private Toolbar toolbar;
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
@@ -35,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMESSINON_REQ_CODE);
+        }
+
 
         toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
@@ -106,13 +117,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==ADD_CAR_REQ_CODE && requestCode== ViewCarActivity.ADD_CAR_RESULT_CODE) {
+        if (requestCode == ADD_CAR_REQ_CODE && requestCode == ViewCarActivity.ADD_CAR_RESULT_CODE) {
             db.open();
             ArrayList<Car> cars = db.getAllCars();
             db.close();
             adapter.setCars(cars);
             adapter.notifyDataSetChanged();
 
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case PERMESSINON_REQ_CODE:
+                if (grantResults.length >0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+
+                }
+                else {
+
+                }
         }
     }
 }
