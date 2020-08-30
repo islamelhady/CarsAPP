@@ -89,20 +89,32 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this, "Clicked Submit", Toast.LENGTH_SHORT).show();
+                db.open();
+                ArrayList<Car> cars = db.getCars(query);
+                db.close();
+                adapter.setCars(cars);
+                adapter.notifyDataSetChanged();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(MainActivity.this, newText, Toast.LENGTH_SHORT).show();
+                db.open();
+                ArrayList<Car> cars = db.getCars(newText);
+                db.close();
+                adapter.setCars(cars);
+                adapter.notifyDataSetChanged();
                 return false;
             }
         });
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                Toast.makeText(MainActivity.this, "close", Toast.LENGTH_SHORT).show();
+                db.open();
+                ArrayList<Car> cars = db.getAllCars();
+                db.close();
+                adapter.setCars(cars);
+                adapter.notifyDataSetChanged();
                 return false;
             }
         });
