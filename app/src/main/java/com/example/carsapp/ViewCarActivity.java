@@ -128,8 +128,9 @@ public class ViewCarActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String model, color, description, image="";
+        String model, color, description, image = "";
         Double dpl;
+        db.open();
         switch (item.getItemId()) {
             case R.id.details_save:
                 model = et_model.getText().toString();
@@ -141,7 +142,6 @@ public class ViewCarActivity extends AppCompatActivity {
                 }
 
                 Car car = new Car(carId, model, color, dpl, image, description);
-                db.open();
 
                 boolean res;
                 if (carId == -1) {
@@ -157,7 +157,6 @@ public class ViewCarActivity extends AppCompatActivity {
                     setResult(EDIT_CAR_RESULT_CODE, null);
                     finish();
                 }
-                db.close();
                 return true;
 
             case R.id.details_edit:
@@ -170,8 +169,17 @@ public class ViewCarActivity extends AppCompatActivity {
                 edit.setVisible(false);
                 return true;
             case R.id.details_delete:
+                car = new Car(carId,null,null,0,null,null);
+
+                    res=db.deletCar(car);
+                    if (res){
+                        Toast.makeText(this, "Car Deleted Successful", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+
                 return true;
         }
+        db.close();
         return false;
     }
 
