@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">CarsAPP</string>
+    <string name="app_name">DB Cars</string>
+    <string name="details_et_model_hint">Details</string>
+    <string name="details_et_color_hint">Color</string>
+    <string name="details_et_dpl_hint">Distance Per Letter</string>
+    <string name="details_et_desc_hint">Description</string>
 </resources>
