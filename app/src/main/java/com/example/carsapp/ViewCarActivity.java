@@ -128,7 +128,7 @@ public class ViewCarActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String model, color, description, image;
+        String model, color, description, image="";
         Double dpl;
         switch (item.getItemId()) {
             case R.id.details_save:
@@ -136,21 +136,40 @@ public class ViewCarActivity extends AppCompatActivity {
                 color = et_color.getText().toString();
                 dpl = Double.parseDouble(et_dpl.getText().toString());
                 description = et_description.getText().toString();
-                image = imageUri.toString();
+                if (imageUri != null) {
+                    image = imageUri.toString();
+                }
 
-                Car car = new Car(model, color, dpl, image, description);
+                Car car = new Car(carId, model, color, dpl, image, description);
                 db.open();
-                boolean res = db.insertCar(car);
-                db.close();
-                if (res)
-                    Toast.makeText(this, "Add Success", Toast.LENGTH_SHORT).show();
-                setResult(ADD_CAR_RESULT_CODE, null);
-                finish();
 
+                boolean res;
+                if (carId == -1) {
+                    res = db.insertCar(car);
+                    if (res)
+                        Toast.makeText(this, "Car Added Successfully", Toast.LENGTH_SHORT).show();
+                    setResult(ADD_CAR_RESULT_CODE, null);
+                    finish();
+                } else {
+                    res = db.updateCar(car);
+                    if (res)
+                        Toast.makeText(this, "Car Modified Successfully", Toast.LENGTH_SHORT).show();
+                    setResult(EDIT_CAR_RESULT_CODE, null);
+                    finish();
+                }
+                db.close();
+                return true;
+
+            case R.id.details_edit:
+                ensableFields();
+                MenuItem save = toolbar.getMenu().findItem(R.id.details_save);
+                MenuItem delete = toolbar.getMenu().findItem(R.id.details_delete);
+                MenuItem edit = toolbar.getMenu().findItem(R.id.details_edit);
+                save.setVisible(true);
+                delete.setVisible(false);
+                edit.setVisible(false);
                 return true;
             case R.id.details_delete:
-                return true;
-            case R.id.details_edit:
                 return true;
         }
         return false;

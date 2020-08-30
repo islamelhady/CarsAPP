@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ADD_CAR_REQ_CODE && requestCode == ViewCarActivity.ADD_CAR_RESULT_CODE) {
+        if (requestCode == ADD_CAR_REQ_CODE) {
             db.open();
             ArrayList<Car> cars = db.getAllCars();
             db.close();
