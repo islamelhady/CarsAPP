@@ -1,51 +1,42 @@
 package com.example.carsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import java.util.ArrayList;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 public class MainActivity extends AppCompatActivity {
-
-    EditText textmodel, textcolor, textdistance;
-    Button buttonsave, buttonrestor;
-    MyDatabase database;
-    RecyclerView recyclerView;
+    private Toolbar toolbar;
+    private FloatingActionButton fab;
+    private RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_car);
-//
-//        recyclerView = findViewById(R.id.rv_main);
-//
-//
-////        database = new MyDatabase(this);
-//
-//        DatabaseAccess databaseAccess =  DatabaseAccess.getInstance(this);
-//        ArrayList<Car> cars = new ArrayList<>();
-//        databaseAccess.open();
-//        cars = databaseAccess.getAllCars();
-//        databaseAccess.close();
-//
-//
-//        RecyclerViewAdapter adapter = new RecyclerViewAdapter(cars);
-//        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,2);
-//
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setAdapter(adapter);
-//
-//
-//
+        setContentView(R.layout.activity_main);
+
+        toolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+        fab = findViewById(R.id.main_fab);
+        rv = findViewById(R.id.main_recycler_view);
+
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 }

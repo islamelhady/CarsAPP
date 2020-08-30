@@ -5,18 +5,24 @@ public class Car {
     private String model;
     private String color;
     private double dpl;
+    private String image;
+    private String description;
 
-    public Car(String model, String color, double dpl) {
-        this.model = model;
-        this.color = color;
-        this.dpl = dpl;
-    }
-
-    public Car(int id, String model, String color, double dpl) {
+    public Car(int id, String model, String color, double dpl, String image, String description) {
         this.id = id;
         this.model = model;
         this.color = color;
         this.dpl = dpl;
+        this.image = image;
+        this.description = description;
+    }
+
+    public Car(String model, String color, double dpl, String image, String description) {
+        this.model = model;
+        this.color = color;
+        this.dpl = dpl;
+        this.image = image;
+        this.description = description;
     }
 
     public int getId() {
@@ -49,5 +55,21 @@ public class Car {
 
     public void setDpl(double dpl) {
         this.dpl = dpl;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

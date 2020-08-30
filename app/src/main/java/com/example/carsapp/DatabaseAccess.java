@@ -41,6 +41,8 @@ public class DatabaseAccess {
         values.put(MyDatabase.CAR_CLN_MODEL, car.getModel());
         values.put(MyDatabase.CAR_CLN_COLOR, car.getColor());
         values.put(MyDatabase.CAR_CLN_DPL, car.getDpl());
+        values.put(MyDatabase.CAR_CLN_DESCRIPTION, car.getDescription());
+        values.put(MyDatabase.CAR_CLN_IMAGE, car.getImage());
 
         long result = database.insert(MyDatabase.CAR_TB_NAME, null, values);
         return result != -1;
@@ -51,6 +53,8 @@ public class DatabaseAccess {
         values.put(MyDatabase.CAR_CLN_MODEL, car.getModel());
         values.put(MyDatabase.CAR_CLN_COLOR, car.getColor());
         values.put(MyDatabase.CAR_CLN_DPL, car.getDpl());
+        values.put(MyDatabase.CAR_CLN_DESCRIPTION, car.getDescription());
+        values.put(MyDatabase.CAR_CLN_IMAGE, car.getImage());
 
         String arg[] = {String.valueOf(car.getId())};
         long result = database.update(MyDatabase.CAR_TB_NAME, values, "id=?", arg);
@@ -77,8 +81,10 @@ public class DatabaseAccess {
                 String model = cursor.getString(cursor.getColumnIndex(MyDatabase.CAR_CLN_MODEL));
                 String color = cursor.getString(cursor.getColumnIndex(MyDatabase.CAR_CLN_COLOR));
                 Double dpl = cursor.getDouble(cursor.getColumnIndex(MyDatabase.CAR_CLN_DPL));
+                String image = cursor.getString(cursor.getColumnIndex(MyDatabase.CAR_CLN_IMAGE));
+                String description = cursor.getString(cursor.getColumnIndex(MyDatabase.CAR_CLN_DESCRIPTION));
 
-                Car car = new Car(id, model, color, dpl);
+                Car car = new Car(id, model, color, dpl, image, description);
                 cars.add(car);
             }
             while (cursor.moveToNext());
@@ -99,8 +105,10 @@ public class DatabaseAccess {
                 String model = cursor.getString(cursor.getColumnIndex(MyDatabase.CAR_CLN_MODEL));
                 String color = cursor.getString(cursor.getColumnIndex(MyDatabase.CAR_CLN_COLOR));
                 Double dpl = cursor.getDouble(cursor.getColumnIndex(MyDatabase.CAR_CLN_DPL));
+                String image = cursor.getString(cursor.getColumnIndex(MyDatabase.CAR_CLN_IMAGE));
+                String description = cursor.getString(cursor.getColumnIndex(MyDatabase.CAR_CLN_DESCRIPTION));
 
-                Car car = new Car(id, model, color, dpl);
+                Car car = new Car(id, model, color, dpl, image, description);
                 cars.add(car);
             }
             while (cursor.moveToNext());
