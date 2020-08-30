@@ -117,5 +117,24 @@ public class DatabaseAccess {
         return cars;
     }
 
+    public Car getCar(int carId) {
+        Cursor cursor = database.rawQuery("SELECT * FROM " + MyDatabase.CAR_TB_NAME
+                + " WHERE " + MyDatabase.CAR_CLN_ID + "=?", new String[]{String.valueOf(carId)});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndex(MyDatabase.CAR_CLN_ID));
+            String model = cursor.getString(cursor.getColumnIndex(MyDatabase.CAR_CLN_MODEL));
+            String color = cursor.getString(cursor.getColumnIndex(MyDatabase.CAR_CLN_COLOR));
+            Double dpl = cursor.getDouble(cursor.getColumnIndex(MyDatabase.CAR_CLN_DPL));
+            String image = cursor.getString(cursor.getColumnIndex(MyDatabase.CAR_CLN_IMAGE));
+            String description = cursor.getString(cursor.getColumnIndex(MyDatabase.CAR_CLN_DESCRIPTION));
+
+            Car car = new Car(id, model, color, dpl, image, description);
+            cursor.close();
+            return car;
+        }
+        return null;
+    }
+
 
 }

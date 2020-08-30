@@ -21,7 +21,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/backgrounds/scenic[12]" />
+            android:src="@drawable/car_demo" />
 
         <TextView
             android:id="@+id/custom_car_tv_model"

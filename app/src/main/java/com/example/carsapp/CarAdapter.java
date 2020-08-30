@@ -14,9 +14,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
-    ArrayList<Car> cars;
+    private ArrayList<Car> cars;
+    private OnRvItemClickListener listener;
 
-    public CarAdapter(ArrayList<Car> cars) {
+    public CarAdapter(ArrayList<Car> cars, OnRvItemClickListener listener) {
+        this.cars = cars;
+        this.listener = listener;
+    }
+
+    public ArrayList<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(ArrayList<Car> cars) {
         this.cars = cars;
     }
 
@@ -40,6 +50,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
 
         holder.tv_dpl.setText(String.valueOf(car.getDpl()));
         //holder.tv_dpl.setText(car.getDpl()+"");
+        holder.img.setTag(car.getId());
     }
 
     @Override
@@ -51,12 +62,20 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         ImageView img;
         TextView tv_model, tv_color, tv_dpl;
 
-        public CarViewHolder(@NonNull View itemView) {
+        public CarViewHolder(@NonNull final View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.custom_card_iv);
             tv_model = itemView.findViewById(R.id.custom_car_tv_model);
             tv_color = itemView.findViewById(R.id.custom_car_tv_color);
             tv_dpl = itemView.findViewById(R.id.custom_car_tv_dpl);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int id = (int) img.getTag();
+                    listener.onItemClick(id);
+                }
+            });
         }
     }
 }
